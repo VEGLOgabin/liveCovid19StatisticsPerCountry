@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+         <div class="login1 container">
+          <div class="text-center">
+            <h5>Connexion</h5>
+          </div>
+   
+                  <form class="login2" method="post" action="/login/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Votre mail</label>
+                      <input type="email" name='email' class="form-control" id="email" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-4">
+                      <label for="password" class="form-label">Mots de Passe</label>
+                      <input type="password" name="password" class="form-control" id="password">
+                    </div>
+                    <div class="row mt-3">
+
+                      <button class="btn w-100 py-8 mb-4 rounded-2">Connexion</button>
+              
+                      </div>
+                  </form>
+                   <div class="d-flex align-items-center">
+                    <p class="fs-4 mb-0 text-dark">Vous n'avez pas encore un compte
+                      <a class="text-primary fw-medium ms-2" href="{% url 'signup' %}">Sign up</a>
+                    </p>
+                    
+                  </div>
+
+                </div>
+              
+    
+{% endblock %}

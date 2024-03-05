@@ -1,0 +1,14 @@
+.login1{
+
+    margin: auto;
+    background-color: #FF7F00; /* la couleur orange */
+     margin-top: 5em;
+   /* margin-bottom: 10em;
+    margin-right: 20em;
+    margin-left: 20em; */
+    border: 5px;
+    border-radius: 50px;
+    width: 900px;
+    height: 400px;
+    padding: 50px;
+}
