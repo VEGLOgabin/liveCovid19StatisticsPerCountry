@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corona_virus_app",
+    "account"
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,9 @@ ROOT_URLCONF = 'corona_data_collection_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR.joinpath('templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,9 +121,66 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+import os
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+from datetime import datetime
+
+
+#Logs register
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "user_actions_file": {  # Nom du gestionnaire de journal pour les actions de l'utilisateur
+            "level": "INFO",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": f"user_actions{datetime.now().strftime('%Y-%m-%d')}.log",  # Nom du fichier de journal pour les actions de l'utilisateur
+            "when": "D",  # Rotation quotidienne
+            "interval": 1,  # Créez un nouveau fichier chaque jour
+            "backupCount": 7,  # Conservez jusqu'à 7 fichiers de journal
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "user_actions": {  # Nom du logger pour les actions de l'utilisateur
+            "handlers": ["user_actions_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+
+
+
+
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+AUTH_USER_MODEL = 'account.User'
