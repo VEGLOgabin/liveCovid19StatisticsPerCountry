@@ -1,0 +1,1 @@
+default_app_config = 'corona_virus_app.apps.CoronaVirusAppConfig'
