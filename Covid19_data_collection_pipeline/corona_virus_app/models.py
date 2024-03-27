@@ -18,3 +18,11 @@ class Covid19LastCases(models.Model):
     population = models.CharField(max_length = 100)
     continent = models.CharField(max_length = 90)
     date_saved = models.DateField(auto_now_add=True)
+    
+    
+
+class TestJust(models.Model):
+    
+    name = models.CharField(max_length =255)
+    description = models.TextField(max_length =255)
+    

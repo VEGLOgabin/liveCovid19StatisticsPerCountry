@@ -23,9 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-np_70^ou^-k7*6n84z1ab7#202+@t0hos!p)g*ddr+q0iy(l(w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+
+
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -45,8 +47,9 @@ INSTALLED_APPS = [
 ]
 
 CRONJOBS = [
-    # ('0 0 * * *', 'corona_virus_app.cron.write_data_csv_file'),  #WORK VERY WELL
+    ('0 0 * * *', 'corona_virus_app.cron.scrape_data_and_insert_to_db'),  #WORK VERY WELL
     # ('*/1 * * * *', 'corona_virus_app.cron.write_data_csv_file'),   #WORK VERY WELL
+    # ('*/1 * * * *', 'corona_virus_app.cron.scrape_data_and_insert_to_db') # WORK VERY WELL
     
 ]
 

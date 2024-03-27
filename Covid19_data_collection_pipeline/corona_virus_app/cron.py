@@ -3,6 +3,9 @@ from django.core.management.base import BaseCommand
 from subprocess import run, PIPE
 import os
 
+import pandas as pd
+
+from .models import TestJust, Covid19LastCases
 
 import os
 import csv
@@ -71,7 +74,62 @@ def write_data_csv_file():
 
         
         
-# write_data_csv_file(url)
+def scrape_data_and_insert_to_db():
+    
+    url = "https://www.worldometers.info/coronavirus/"
+    data = collect_data(url)
+    
+    header = data[0]
+    data_values = data[1]
+    df = pd.DataFrame(columns=header, data=data_values)
+    # List of columns to delete
+    columns_to_delete = ['#', 'Tot\xa0Cases/1M pop', 'Deaths/1M pop', 'TotalTests',
+                     'Tests/\n1M pop', '1 Caseevery X ppl', '1 Deathevery X ppl',
+                     '1 Testevery X ppl', 'New Cases/1M pop', 'New Deaths/1M pop',
+                     'Active Cases/1M pop']
+    
+    df = df.drop(columns=columns_to_delete)
+
+    # New column names
+    new_column_names = {'Country,Other': 'country',
+                    'TotalCases': 'totalCases',
+                    'NewCases': 'newCases',
+                    'TotalDeaths': 'totalDeaths',
+                    'NewDeaths': 'newDeaths',
+                    'TotalRecovered': 'totalRecovered',
+                    'NewRecovered': 'newRecovered',
+                    'ActiveCases': 'activeCases',
+                    'Serious,Critical': 'seriousCritical',
+                    'Population': 'population',
+                    'Continent': 'continent'}
+    
+    # Rename columns
+    df = df.rename(columns=new_column_names)
+    
+    # Iterate over rows of the DataFrame
+    for index, row in df.iterrows():
+        # Create a new Covid19LastCases object
+        covid_case = Covid19LastCases(
+            country=row['country'],
+            totalCases=row['totalCases'],
+            newCases=row['newCases'],
+            totalDeaths=row['totalDeaths'],
+            newDeaths=row['newDeaths'],
+            totalRecovered=row['totalRecovered'],
+            newRecovered=row['newRecovered'],
+            activeCases=row['activeCases'],
+            seriousCritical=row['seriousCritical'],
+            population=row['population'],
+            continent=row['continent']
+        )
+        # Save the object to the database
+        covid_case.save()
+
+    
+    
+    
+   
+    
 
 
 def my_scheduled_job():
