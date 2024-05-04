@@ -5,6 +5,12 @@
 ## Overview
 Welcome to the COVID-19 Dashboard, a personalized tool for tracking the latest COVID-19 statistics. This Django web application empowers users to stay informed about the pandemic's impact worldwide, providing a comprehensive set of features for data visualization and analysis.
 
+![](Home_page.png)
+
+![](one_case_filter.png)
+
+![](404_page.png)
+
 ## Features
 - **Explore Global Data**: Dive into detailed COVID-19 statistics by country, including total cases, new cases, total deaths, new deaths, total recovered, and more.
 - **Search and Filter**: Easily search for specific countries or filter statistics by date to uncover insights tailored to your needs.
