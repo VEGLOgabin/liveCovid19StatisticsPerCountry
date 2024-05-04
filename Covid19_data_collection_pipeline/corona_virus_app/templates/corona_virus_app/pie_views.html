@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="text-center">Pie views for covid19 in {{instance.country}}</h1>
+
+    <div class="text-center container" id="container" style="width: 95%;">
+        <canvas id="pie-chart"></canvas>
+    </div>
+
+    <div class="table_margin">
+        <table class="table caption-top">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Country</th>
+                    <th scope="col">TotalCases</th>
+                    <th scope="col">NewCases</th>
+                    <th scope="col">TotalDeaths</th>
+                    <th scope="col">NewDeaths</th>
+                    <th scope="col">TotalRecovered</th>
+                    <th scope="col">NewRecovered</th>
+                    <th scope="col">ActiveCases</th>
+                    <th scope="col">Serious,Critical</th>
+                    <th scope="col">Population</th>
+                    <th scope="col">Continent</th>
+                    <th scope="col">Date uploaded</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="country">{{ instance.country }}</td>
+                    <td id="totalCases">{{ instance.totalCases }}</td>
+                    <td id="newCases">{{ instance.newCases }}</td>
+                    <td id="totalDeaths">{{ instance.totalDeaths }}</td>
+                    <td id="newDeaths">{{ instance.newDeaths }}</td>
+                    <td id="totalRecovered">{{ instance.totalRecovered }}</td>
+                    <td id="newRecovered">{{ instance.newRecovered }}</td>
+                    <td id="activeCases">{{ instance.activeCases }}</td>
+                    <td id="seriousCritical">{{ instance.seriousCritical }}</td>
+                    <td id="population">{{ instance.population }}</td>
+                    <td id="continent">{{ instance.continent }}</td>
+                    <td id="dateUploaded">{{ instance.date_saved }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var country = document.getElementById('country').innerText;
+        var totalCases = parseInt(document.getElementById('totalCases').innerText);
+        var newCases = parseInt(document.getElementById('newCases').innerText);
+        var totalDeaths = parseInt(document.getElementById('totalDeaths').innerText);
+        var newDeaths = parseInt(document.getElementById('newDeaths').innerText);
+        var totalRecovered = parseInt(document.getElementById('totalRecovered').innerText);
+        var newRecovered = parseInt(document.getElementById('newRecovered').innerText);
+        var activeCases = parseInt(document.getElementById('activeCases').innerText);
+        var seriousCritical = parseInt(document.getElementById('seriousCritical').innerText);
+        var population = parseInt(document.getElementById('population').innerText);
+        var continent = document.getElementById('continent').innerText;
+        var dateUploaded = document.getElementById('dateUploaded').innerText;
+
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [totalCases, totalDeaths, totalRecovered, activeCases, population],
+                    backgroundColor: ['#ff0000', '#0000ff', '#ff0080', '#5c26ff', '#ffff26'],
+                    label: 'Population'
+                }],
+                labels: ['TotalCases', 'TotalDeaths', 'TotalRecovered', 'ActiveCases', 'Population']
+            },
+            options: {
+                responsive: true
+            }
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById('pie-chart').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+        };
+    </script>
+{% endblock %}
